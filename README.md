@@ -1,6 +1,3 @@
-Here's the **final README.md** with your exact GitHub repository link and live Vercel URL. Just copy and paste it into your repo.
-
-```markdown
 # 🚀 Aman Goswami – 3D Developer Portfolio
 
 An immersive, production‑ready personal portfolio built with **Three.js**, **TailwindCSS**, and **GSAP** — all in a single HTML file.
@@ -133,4 +130,3 @@ MIT – feel free to use, modify, and adapt. Attribution is appreciated.
 ---
 
 ⭐ If you find this project useful, give it a star!
-```
