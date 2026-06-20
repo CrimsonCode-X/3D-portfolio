@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Goswami | Portfolio</title>
+    <meta name="description" content="Aman Goswami - B.Tech CS Student at GLA University | Full-Stack Developer & AI Enthusiast">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                        'primary-dark': '#7c3aed',
+                        'primary-light': '#a78bfa',
+                        dark: '#0a0a0f',
+                        'dark-card': 'rgba(15,15,25,0.6)',
+                        'dark-border': 'rgba(139,92,246,0.2)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(139,92,246,0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(139,92,246,0.6)' },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --dark: #0a0a0f;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #8b5cf6 #0a0a0f;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+        ::selection {
+            background: rgba(139, 92, 246, 0.4);
+            color: #fff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+        }
+        .glass-card {
+            background: rgba(20, 20, 40, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 8px 40px rgba(139, 92, 246, 0.15);
+            transform: translateY(-4px);
+        }
+        .glass-card-sm {
+            background: rgba(20, 20, 40, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .glass-card-sm:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 4px 25px rgba(139, 92, 246, 0.12);
+            transform: translateY(-2px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #8b5cf6, #c084fc, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.3);
+            border: 2px solid rgba(139, 92, 246, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-dot.active {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
+            transform: scale(1.3);
+        }
+        .nav-dot:hover {
+            background: rgba(139, 92, 246, 0.6);
+            border-color: #a78bfa;
+            transform: scale(1.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 35px rgba(139, 92, 246, 0.55);
+            transform: translateY(-3px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #a78bfa;
+            padding: 11px 26px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(139, 92, 246, 0.5);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: 0 4px 25px rgba(139, 92, 246, 0.2);
+            transform: translateY(-3px);
+        }
+        .section-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            margin-bottom: 16px;
+        }
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0f;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-ring {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(139, 92, 246, 0.2);
+            border-top-color: #8b5cf6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .skill-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(139, 92, 246, 0.12);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            margin: 4px;
+            transition: all 0.3s ease;
+        }
+        .skill-tag:hover {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.5);
+            color: #ddd6fe;
+        }
+        .skill-card {
+            background: rgba(20, 20, 40, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            cursor: default;
+            min-width: 90px;
+        }
+        .skill-card:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
+            transform: translateY(-5px);
+            background: rgba(30, 30, 60, 0.5);
+        }
+        .skill-card svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+        .skill-card:hover svg {
+            transform: scale(1.1);
+        }
+        .skill-card span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            letter-spacing: 0.3px;
+        }
+        .category-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #a78bfa;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        @media (max-width: 768px) {
+            .nav-dots-container {
+                bottom: 20px;
+                top: auto !important;
+                right: 50% !important;
+                transform: translateX(50%) !important;
+                flex-direction: row !important;
+                gap: 10px !important;
+            }
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .hero-avatar-area {
+                height: 280px !important;
+                margin: 0 auto !important;
+            }
+            .skill-card {
+                min-width: 70px;
+                padding: 12px 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-avatar-area {
+                height: 220px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-ring mb-6"></div>
+        <p class="text-primary-light font-display text-lg font-semibold tracking-wider">AMAN GOSWAMI</p>
+        <p class="text-gray-500 text-sm mt-2">Loading 3D Experience...</p>
+    </div>
+
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots-container fixed top-1/2 right-6 -translate-y-1/2 z-50 flex flex-col gap-5 max-md:flex-row max-md:bottom-6 max-md:top-auto max-md:right-1/2 max-md:translate-x-1/2 max-md:-translate-y-0 max-md:gap-3" style="pointer-events: auto;">
+        <a href="#hero" class="nav-dot active" data-section="hero" title="Home"></a>
+        <a href="#about" class="nav-dot" data-section="about" title="About"></a>
+        <a href="#projects" class="nav-dot" data-section="projects" title="Projects"></a>
+        <a href="#skills" class="nav-dot" data-section="skills" title="Skills"></a>
+        <a href="#experience" class="nav-dot" data-section="experience" title="Experience"></a>
+        <a href="#contact" class="nav-dot" data-section="contact" title="Contact"></a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center px-6 md:px-16 lg:px-24 relative">
+            <div class="flex flex-col lg:flex-row items-center w-full gap-8 lg:gap-16">
+                <!-- Left Content -->
+                <div class="flex-1 text-center lg:text-left z-10">
+                    <p class="text-primary-light font-display text-sm tracking-[0.2em] uppercase mb-3 animate-pulse">Computer Science Student</p>
+                    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-4">
+                        Hi, I'm<br><span class="gradient-text">Aman Goswami</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
+                        B.Tech CS @ GLA University • Building intelligent solutions with AI, data science & full-stack development.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="#projects" class="btn-primary">View My Work</a>
+                        <a href="#contact" class="btn-outline">Get In Touch</a>
+                    </div>
+                    <div class="flex gap-4 mt-8 justify-center lg:justify-start">
+                        <a href="https://github.com/CrimsonCode-X" target="_blank" rel="noopener" class="text-gray-400 hover:text-primary-light transition-colors text-2xl" title="GitHub">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/aman-goswami-92a599338/" target="_blank" rel="noopener" class="text-gray-400 hover:text-primary-light transition-colors text-2xl" title="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="https://leetcode.com/u/AmanGoswami001/" target="_blank" rel="noopener" class="text-gray-400 hover:text-primary-light transition-colors text-2xl" title="LeetCode">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.111.744 1.8.744 1.174 0 2.128-.943 2.128-2.117 0-.566-.217-1.1-.644-1.503L15.08 2.61C14.064 1.595 12.79 1 11.362 1 9.933 1 8.66 1.595 7.644 2.61L3.318 6.936C2.302 7.95 1.707 9.203 1.707 10.63c0 1.428.595 2.68 1.61 3.694l4.327 4.367C8.66 19.706 9.933 20.3 11.362 20.3c1.428 0 2.702-.595 3.718-1.61l2.718-2.63c.427-.403.645-.937.645-1.503 0-1.174-.954-2.117-2.128-2.117-.689 0-1.286.23-1.8.744l-.013-.016z"/></svg>
+                        </a>
+                        <a href="https://www.hackerrank.com/profile/aman_goswami_cs1" target="_blank" rel="noopener" class="text-gray-400 hover:text-primary-light transition-colors text-2xl" title="HackerRank">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1.285 0 9.75 4.886 10.392 6 .645 1.115.645 10.885 0 12S13.285 24 12 24s-9.75-4.886-10.395-6c-.641-1.115-.641-10.885 0-12C2.25 4.886 10.715 0 12 0zm2.295 6.799c-.141 0-.258.115-.258.258v3.875H9.963V7.057c0-.143-.115-.258-.258-.258h-1.61c-.142 0-.257.115-.257.258v9.886c0 .143.115.258.258.258h1.61c.142 0 .257-.115.257-.258v-3.961h4.074v3.961c0 .143.115.258.258.258h1.61c.142 0 .257-.115.257-.258V7.057c0-.143-.115-.258-.258-.258h-1.61z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Right: 3D Avatar area -->
+                <div class="flex-1 hero-avatar-area h-[400px] md:h-[500px] lg:h-[600px] w-full max-w-[500px] relative">
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-primary/10 blur-3xl animate-pulse-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="min-h-screen flex items-center px-6 md:px-16 lg:px-24 py-20">
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="section-tag">About Me</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">Get To Know <span class="gradient-text">Me</span></h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="glass-card p-8">
+                        <h3 class="font-display text-2xl font-semibold text-white mb-4">👋 Who I Am</h3>
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            I'm a passionate <span class="text-primary-light font-semibold">B.Tech Computer Science</span> student at <span class="text-primary-light font-semibold">GLA University, Mathura</span> (2024-2028). I love building things that live at the intersection of code, data, and intelligence.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            From crafting AI-powered code reviewers to analyzing mutual fund trends, I thrive on solving real-world problems with elegant technical solutions. My journey is fueled by curiosity, hackathons, and a relentless drive to learn.
+                        </p>
+                    </div>
+                    <div class="glass-card p-8">
+                        <h3 class="font-display text-2xl font-semibold text-white mb-4">🎓 Education</h3>
+                        <div class="space-y-5">
+                            <div class="border-l-2 border-primary pl-4">
+                                <p class="text-white font-semibold">B.Tech Computer Science</p>
+                                <p class="text-primary-light text-sm">GLA University, Mathura • 2024 – 2028</p>
+                                <p class="text-gray-400 text-sm">Currently Pursuing</p>
+                            </div>
+                            <div class="border-l-2 border-primary/50 pl-4">
+                                <p class="text-white font-semibold">Class 12th (CBSE) — 77.7%</p>
+                                <p class="text-primary-light text-sm">Kanha Makhan Public School • 2024</p>
+                            </div>
+                            <div class="border-l-2 border-primary/30 pl-4">
+                                <p class="text-white font-semibold">Class 10th (CBSE) — 84.4%</p>
+                                <p class="text-primary-light text-sm">Kanha Makhan Public School • 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 mt-8 text-center">
+                    <p class="text-gray-300">📍 Based in <span class="text-primary-light font-semibold">Mathura, Uttar Pradesh</span> • Open to collaborations & exciting opportunities!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 px-6 md:px-16 lg:px-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="section-tag">Projects</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">What I've <span class="gradient-text">Built</span></h2>
+                    <p class="text-gray-400 max-w-xl mx-auto">A collection of projects spanning AI, data science, web development, and more.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Project 1 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">HTML</span><span class="skill-tag text-xs">CSS</span><span class="skill-tag text-xs">JavaScript</span><span class="skill-tag text-xs">Python</span><span class="skill-tag text-xs">Gemini API</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">🤖 AI Code Reviewer</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">AI-powered code review tool with smart optimization suggestions using Google Gemini API.</p>
+                        <a href="https://github.com/CrimsonCode-X/AI-Code-Reviewer" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">React</span><span class="skill-tag text-xs">Vite</span><span class="skill-tag text-xs">JavaScript</span><span class="skill-tag text-xs">OpenWeather API</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">🌤 Weather App</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">Real-time weather tracking with beautiful responsive design and location-based forecasts.</p>
+                        <a href="https://github.com/CrimsonCode-X/Weather-App" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">Python</span><span class="skill-tag text-xs">Scikit-learn</span><span class="skill-tag text-xs">Pandas</span><span class="skill-tag text-xs">SMOTE</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">💳 Fraud Detection</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">ML model with 0.54 F1-score & 0.78 precision tackling imbalanced credit card transaction data.</p>
+                        <a href="https://github.com/CrimsonCode-X/credit-card-fraud-detection" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                    <!-- Project 4 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">Python</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">📚 Library Management</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">Console-based system with file handling for persistent book & member data storage.</p>
+                        <a href="https://github.com/CrimsonCode-X/LIBRARY-MANAGEMENT-SYSTEM" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                    <!-- Project 5 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">Python</span><span class="skill-tag text-xs">Pandas</span><span class="skill-tag text-xs">Seaborn</span><span class="skill-tag text-xs">Scikit-learn</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">🍽 Zomato Analysis</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">Exploratory data analysis on restaurant pricing trends & consumer behavior insights.</p>
+                        <a href="https://github.com/CrimsonCode-X/Zomato-Data-Analysis" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                    <!-- Project 6 -->
+                    <div class="glass-card p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="skill-tag text-xs">Python</span><span class="skill-tag text-xs">SQL</span><span class="skill-tag text-xs">Tableau</span><span class="skill-tag text-xs">Plotly</span><span class="skill-tag text-xs">Jupyter</span>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-2">📊 Mutual Fund Analytics</h3>
+                        <p class="text-gray-400 text-sm flex-grow mb-4">End-to-end analytics solution for the Indian mutual fund industry with visual dashboards.</p>
+                        <a href="https://github.com/CrimsonCode-X/Mutual-Fund-Analytics-Capstone" target="_blank" rel="noopener" class="btn-outline text-sm text-center w-full">View on GitHub →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section (Enhanced with Icons) -->
+        <section id="skills" class="py-20 px-6 md:px-16 lg:px-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="section-tag">Skills</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">Tech <span class="gradient-text">Stack</span></h2>
+                    <p class="text-gray-400 max-w-xl mx-auto">Languages, frameworks, tools, and libraries I work with.</p>
+                </div>
+                <!-- Dynamic skills container populated by JavaScript -->
+                <div id="skills-container" class="space-y-12">
+                    <!-- Categories will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Achievements Section -->
+        <section id="experience" class="py-20 px-6 md:px-16 lg:px-24">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="section-tag">Experience & Achievements</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">Milestones & <span class="gradient-text">Credentials</span></h2>
+                </div>
+                <div class="glass-card p-8 mb-8">
+                    <h3 class="font-display text-2xl font-semibold text-white mb-6">🏆 Achievements</h3>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="flex items-start gap-3">
+                            <span class="text-2xl">🥇</span>
+                            <div><p class="text-white font-semibold">6th Rank — Vision-X Hackathon</p><p class="text-gray-400 text-sm">GLA University</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-2xl">🎓</span>
+                            <div><p class="text-white font-semibold">Elite NPTEL Certification</p><p class="text-gray-400 text-sm">Environmental Engineering</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-2xl">⚡</span>
+                            <div><p class="text-white font-semibold">133+ LeetCode Problems</p><p class="text-gray-400 text-sm">55 Easy • 62 Medium • 16 Hard</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-2xl">🏅</span>
+                            <div><p class="text-white font-semibold">HackerRank Certifications</p><p class="text-gray-400 text-sm">SQL (Advanced), Java, Python</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8">
+                    <h3 class="font-display text-2xl font-semibold text-white mb-6">💼 Virtual Job Simulations (Forage)</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">Deloitte Australia</span><p class="text-gray-400 text-xs mt-1">Data Analytics</p></div>
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">J.P. Morgan</span><p class="text-gray-400 text-xs mt-1">Quantitative Research</p></div>
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">Electronic Arts</span><p class="text-gray-400 text-xs mt-1">Product Management</p></div>
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">Siemens Mobility</span><p class="text-gray-400 text-xs mt-1">Project Manager</p></div>
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">Goldman Sachs</span><p class="text-gray-400 text-xs mt-1">Risk</p></div>
+                        <div class="glass-card-sm p-4 text-center"><span class="text-primary-light font-semibold">Mastercard</span><p class="text-gray-400 text-xs mt-1">Cybersecurity</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="min-h-screen flex items-center px-6 md:px-16 lg:px-24 py-20">
+            <div class="w-full max-w-4xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="section-tag">Contact</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">Let's <span class="gradient-text">Connect</span></h2>
+                    <p class="text-gray-400">I'm always open to new opportunities, collaborations, and interesting conversations.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="glass-card p-8 flex flex-col justify-center">
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                </div>
+                                <div><p class="text-gray-400 text-xs uppercase tracking-wider">Email</p><a href="mailto:goswamiaman1112@gmail.com" class="text-white hover:text-primary-light transition-colors">goswamiaman1112@gmail.com</a></div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                                </div>
+                                <div><p class="text-gray-400 text-xs uppercase tracking-wider">Phone</p><a href="tel:+918868861056" class="text-white hover:text-primary-light transition-colors">+91 8868861056</a></div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div><p class="text-gray-400 text-xs uppercase tracking-wider">Location</p><p class="text-white">Mathura, Uttar Pradesh, India</p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col justify-center items-center text-center">
+                        <h3 class="font-display text-2xl font-semibold text-white mb-6">Find Me Online</h3>
+                        <div class="flex gap-6 flex-wrap justify-center">
+                            <a href="https://github.com/CrimsonCode-X" target="_blank" rel="noopener" class="w-14 h-14 rounded-full glass-card-sm flex items-center justify-center text-white hover:text-primary-light hover:border-primary transition-all text-2xl" title="GitHub"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                            <a href="https://www.linkedin.com/in/aman-goswami-92a599338/" target="_blank" rel="noopener" class="w-14 h-14 rounded-full glass-card-sm flex items-center justify-center text-white hover:text-primary-light hover:border-primary transition-all text-2xl" title="LinkedIn"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            <a href="https://leetcode.com/u/AmanGoswami001/" target="_blank" rel="noopener" class="w-14 h-14 rounded-full glass-card-sm flex items-center justify-center text-white hover:text-primary-light hover:border-primary transition-all text-2xl" title="LeetCode"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.111.744 1.8.744 1.174 0 2.128-.943 2.128-2.117 0-.566-.217-1.1-.644-1.503L15.08 2.61C14.064 1.595 12.79 1 11.362 1 9.933 1 8.66 1.595 7.644 2.61L3.318 6.936C2.302 7.95 1.707 9.203 1.707 10.63c0 1.428.595 2.68 1.61 3.694l4.327 4.367C8.66 19.706 9.933 20.3 11.362 20.3c1.428 0 2.702-.595 3.718-1.61l2.718-2.63c.427-.403.645-.937.645-1.503 0-1.174-.954-2.117-2.128-2.117-.689 0-1.286.23-1.8.744l-.013-.016z"/></svg></a>
+                            <a href="https://www.hackerrank.com/profile/aman_goswami_cs1" target="_blank" rel="noopener" class="w-14 h-14 rounded-full glass-card-sm flex items-center justify-center text-white hover:text-primary-light hover:border-primary transition-all text-2xl" title="HackerRank"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1.285 0 9.75 4.886 10.392 6 .645 1.115.645 10.885 0 12S13.285 24 12 24s-9.75-4.886-10.395-6c-.641-1.115-.641-10.885 0-12C2.25 4.886 10.715 0 12 0zm2.295 6.799c-.141 0-.258.115-.258.258v3.875H9.963V7.057c0-.143-.115-.258-.258-.258h-1.61c-.142 0-.257.115-.257.258v9.886c0 .143.115.258.258.258h1.61c.142 0 .257-.115.257-.258v-3.961h4.074v3.961c0 .143.115.258.258.258h1.61c.142 0 .257-.115.257-.258V7.057c0-.143-.115-.258-.258-.258h-1.61z"/></svg></a>
+                        </div>
+                        <a href="mailto:goswamiaman1112@gmail.com" class="btn-primary mt-8 inline-block">Send Me an Email</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-8 px-6 text-center border-t border-primary/10">
+            <p class="text-gray-500 text-sm">© 2026 <span class="text-primary-light">Aman Goswami</span>. Built with passion & pixels.</p>
+        </footer>
+    </div>
+
+    <!-- GSAP and Three.js Imports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        // ---- THREE.JS SCENE (unchanged) ----
+        const canvas = document.getElementById('three-canvas');
+        const loadingScreen = document.getElementById('loading-screen');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color('#0a0a0f');
+        scene.fog = new THREE.FogExp2('#0a0a0f', 0.00015);
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1.5, 8);
+        camera.lookAt(0, 0.3, 0);
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+
+        const ambientLight = new THREE.AmbientLight('#4c1d95', 1.5);
+        scene.add(ambientLight);
+        const keyLight = new THREE.DirectionalLight('#ffffff', 3);
+        keyLight.position.set(5, 6, 5);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
+        scene.add(keyLight);
+        const rimLight = new THREE.DirectionalLight('#8b5cf6', 2);
+        rimLight.position.set(-3, 1, -3);
+        scene.add(rimLight);
+        const fillLight = new THREE.PointLight('#a78bfa', 4, 12);
+        fillLight.position.set(0, 2, 2);
+        scene.add(fillLight);
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.ShadowMaterial({ opacity: 0.3 }));
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -3;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        const robotGroup = new THREE.Group();
+        scene.add(robotGroup);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: '#2d2d3f', roughness: 0.3, metalness: 0.7 });
+        const accentMat = new THREE.MeshStandardMaterial({ color: '#8b5cf6', roughness: 0.2, metalness: 0.5, emissive: '#3b1f7e', emissiveIntensity: 0.4 });
+        const darkMat = new THREE.MeshStandardMaterial({ color: '#1a1a2e', roughness: 0.4, metalness: 0.8 });
+        const eyeWhiteMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.1, metalness: 0.1, emissive: '#ffffff', emissiveIntensity: 0.6 });
+        const pupilMat = new THREE.MeshStandardMaterial({ color: '#111111', roughness: 0.05, metalness: 0.2 });
+        const glowMat = new THREE.MeshStandardMaterial({ color: '#c084fc', roughness: 0.1, metalness: 0.1, emissive: '#8b5cf6', emissiveIntensity: 1.5 });
+        const jointMat = new THREE.MeshStandardMaterial({ color: '#4a4a6a', roughness: 0.2, metalness: 0.9 });
+
+        const body = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.4, 0.7, 2, 2, 2), bodyMat);
+        body.position.y = 0.2; body.castShadow = body.receiveShadow = true; robotGroup.add(body);
+        const chest = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.5, 0.1), accentMat);
+        chest.position.set(0, 0.35, 0.4); chest.castShadow = true; robotGroup.add(chest);
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.45, 32, 32), darkMat);
+        head.position.y = 1.15; head.scale.set(1,1.05,0.9); head.castShadow = head.receiveShadow = true; robotGroup.add(head);
+        const face = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.08), accentMat);
+        face.position.set(0,1.15,0.38); robotGroup.add(face);
+        const eyeGeo = new THREE.SphereGeometry(0.1,16,16);
+        const leftEye = new THREE.Mesh(eyeGeo, eyeWhiteMat); leftEye.position.set(-0.14,1.22,0.4); leftEye.name='leftEye'; robotGroup.add(leftEye);
+        const rightEye = new THREE.Mesh(eyeGeo, eyeWhiteMat); rightEye.position.set(0.14,1.22,0.4); rightEye.name='rightEye'; robotGroup.add(rightEye);
+        const pupilGeo = new THREE.SphereGeometry(0.05,8,8);
+        const leftPupil = new THREE.Mesh(pupilGeo, pupilMat); leftPupil.position.set(-0.14,1.22,0.47); leftPupil.name='leftPupil'; robotGroup.add(leftPupil);
+        const rightPupil = new THREE.Mesh(pupilGeo, pupilMat); rightPupil.position.set(0.14,1.22,0.47); rightPupil.name='rightPupil'; robotGroup.add(rightPupil);
+        const antenna = new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,0.35,8), darkMat); antenna.position.y=1.55; antenna.castShadow=true; robotGroup.add(antenna);
+        const antennaBall = new THREE.Mesh(new THREE.SphereGeometry(0.07,16,16), glowMat); antennaBall.position.y=1.75; antennaBall.name='antennaBall'; robotGroup.add(antennaBall);
+        const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.15,0.25,16), jointMat); neck.position.y=0.9; neck.castShadow=true; robotGroup.add(neck);
+
+        function createArm(side) {
+            const arm = new THREE.Group(); const x = side==='left'?-0.7:0.7;
+            arm.add(new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.12,0.7,12), bodyMat).translateY(-0.15));
+            arm.add(new THREE.Mesh(new THREE.SphereGeometry(0.13,16,16), jointMat).translateY(0.25));
+            arm.add(new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12), jointMat).translateY(-0.55));
+            arm.add(new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.1,0.55,10), darkMat).translateY(-0.85));
+            arm.add(new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12), accentMat).translateY(-1.15));
+            arm.position.set(x,0.5,0); arm.name=side+'Arm'; return arm;
+        }
+        const leftArm = createArm('left'); const rightArm = createArm('right');
+        robotGroup.add(leftArm); robotGroup.add(rightArm);
+
+        function createLeg(side) {
+            const leg = new THREE.Group(); const x = side==='left'?-0.25:0.25;
+            leg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.15,0.6,12), bodyMat).translateY(-0.3));
+            leg.add(new THREE.Mesh(new THREE.SphereGeometry(0.11,12,12), jointMat).translateY(-0.65));
+            leg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.12,0.55,10), darkMat).translateY(-0.95));
+            leg.add(new THREE.Mesh(new THREE.BoxGeometry(0.2,0.12,0.3,4,2,4), accentMat).translateY(-1.25).translateZ(0.08));
+            leg.position.set(x,-0.5,0); leg.name=side+'Leg'; return leg;
+        }
+        robotGroup.add(createLeg('left')); robotGroup.add(createLeg('right'));
+        robotGroup.position.set(1.8,-0.15,0); robotGroup.rotation.y=-0.2;
+
+        const floatingShapes = [];
+        const shapeConfigs = [
+            { geo: new THREE.IcosahedronGeometry(0.35,1), mat: new THREE.MeshStandardMaterial({color:'#8b5cf6',roughness:0.2,metalness:0.3,wireframe:true,emissive:'#3b1f7e',emissiveIntensity:0.5}), pos:[-4,2.5,-3], speed:0.3 },
+            { geo: new THREE.TorusKnotGeometry(0.25,0.08,64,16), mat: new THREE.MeshStandardMaterial({color:'#a78bfa',roughness:0.1,metalness:0.4,emissive:'#4c1d95',emissiveIntensity:0.4}), pos:[3.5,-1.5,-4], speed:0.5 },
+            { geo: new THREE.OctahedronGeometry(0.3,0), mat: new THREE.MeshStandardMaterial({color:'#c084fc',roughness:0.2,metalness:0.2,wireframe:true,emissive:'#5b21b6',emissiveIntensity:0.6}), pos:[-3,-2,-5], speed:0.4 },
+            { geo: new THREE.TorusGeometry(0.3,0.06,16,32), mat: new THREE.MeshStandardMaterial({color:'#7c3aed',roughness:0.15,metalness:0.5,emissive:'#3b1f7e',emissiveIntensity:0.3}), pos:[4,3,-2], speed:0.35 },
+            { geo: new THREE.IcosahedronGeometry(0.25,0), mat: new THREE.MeshStandardMaterial({color:'#ddd6fe',roughness:0.1,metalness:0.3,emissive:'#8b5cf6',emissiveIntensity:0.7}), pos:[-5,0.5,-6], speed:0.55 },
+            { geo: new THREE.TetrahedronGeometry(0.3,0), mat: new THREE.MeshStandardMaterial({color:'#a78bfa',roughness:0.25,metalness:0.35,wireframe:true,emissive:'#4c1d95',emissiveIntensity:0.5}), pos:[5,-2.5,-3], speed:0.45 },
+            { geo: new THREE.SphereGeometry(0.2,16,16), mat: new THREE.MeshStandardMaterial({color:'#c084fc',roughness:0.05,metalness:0.2,emissive:'#7c3aed',emissiveIntensity:0.8}), pos:[-2,3.5,-4], speed:0.6 },
+            { geo: new THREE.BoxGeometry(0.3,0.3,0.3,2,2,2), mat: new THREE.MeshStandardMaterial({color:'#8b5cf6',roughness:0.2,metalness:0.4,wireframe:true,emissive:'#5b21b6',emissiveIntensity:0.4}), pos:[2.5,-3,-5], speed:0.38 },
+        ];
+        shapeConfigs.forEach(c=>{
+            const m = new THREE.Mesh(c.geo,c.mat); m.position.set(...c.pos); m.castShadow=true;
+            m.userData={baseY:c.pos[1],speed:c.speed,phase:Math.random()*Math.PI*2,rotSpeed:{x:(Math.random()-0.5)*0.4,y:(Math.random()-0.5)*0.6,z:(Math.random()-0.5)*0.3}};
+            scene.add(m); floatingShapes.push(m);
+        });
+        const particlesGeo = new THREE.BufferGeometry();
+        const posArray = new Float32Array(400*3);
+        for(let i=0;i<400;i++){ posArray[i*3]=(Math.random()-0.5)*16; posArray[i*3+1]=(Math.random()-0.5)*12; posArray[i*3+2]=(Math.random()-0.5)*10-3; }
+        particlesGeo.setAttribute('position',new THREE.BufferAttribute(posArray,3));
+        scene.add(new THREE.Points(particlesGeo,new THREE.PointsMaterial({color:'#a78bfa',size:0.025,blending:THREE.AdditiveBlending,depthWrite:false,opacity:0.6})));
+
+        const mouse = {x:0,y:0,targetX:0,targetY:0};
+        window.addEventListener('mousemove',e=>{ mouse.targetX=(e.clientX/window.innerWidth)*2-1; mouse.targetY=-(e.clientY/window.innerHeight)*2+1; });
+        let blinkTimer=0, blinkInterval=3.5+Math.random()*3, isBlinking=false, blinkProgress=0;
+        const clock=new THREE.Clock();
+
+        function animate(ts){
+            requestAnimationFrame(animate);
+            const dt=Math.min(clock.getDelta(),0.1), elapsed=ts*0.001;
+            mouse.x+=(mouse.targetX-mouse.x)*3*dt; mouse.y+=(mouse.targetY-mouse.y)*3*dt;
+            robotGroup.position.y=-0.15+Math.sin(elapsed*1.2)*0.2;
+            robotGroup.rotation.y+=( -0.2+mouse.x*0.25 - robotGroup.rotation.y)*2*dt;
+            robotGroup.rotation.x+=( mouse.y*0.08 - robotGroup.rotation.x)*1.5*dt;
+            body.scale.setScalar(1+Math.sin(elapsed*1.6)*0.015);
+            leftArm.rotation.x=Math.sin(elapsed*1.8)*0.12; rightArm.rotation.x=-leftArm.rotation.x;
+            leftArm.rotation.z=Math.cos(elapsed*1.5)*0.06; rightArm.rotation.z=-leftArm.rotation.z;
+            head.rotation.z=Math.sin(elapsed*0.7)*0.04; head.rotation.x=Math.cos(elapsed*0.9)*0.03;
+            antennaBall.scale.setScalar(1+Math.sin(elapsed*3)*0.3);
+            blinkTimer+=dt; if(!isBlinking && blinkTimer>blinkInterval){ isBlinking=true; blinkProgress=0; blinkTimer=0; blinkInterval=3+Math.random()*4; }
+            if(isBlinking){ blinkProgress+=dt/0.15; if(blinkProgress>=1){ blinkProgress=1; isBlinking=false; } const v=blinkProgress<0.5?Math.sin(blinkProgress*Math.PI):Math.sin((1-blinkProgress)*Math.PI); const sy=Math.max(0.05,v); leftEye.scale.y=rightEye.scale.y=leftPupil.scale.y=rightPupil.scale.y=sy; }
+            else{ const t=15*dt; leftEye.scale.y+=(1-leftEye.scale.y)*t; rightEye.scale.y+=(1-rightEye.scale.y)*t; leftPupil.scale.y+=(1-leftPupil.scale.y)*t; rightPupil.scale.y+=(1-rightPupil.scale.y)*t; }
+            floatingShapes.forEach(s=>{ s.rotation.x+=s.userData.rotSpeed.x*dt; s.rotation.y+=s.userData.rotSpeed.y*dt; s.rotation.z+=s.userData.rotSpeed.z*dt; s.position.y=s.userData.baseY+Math.sin(elapsed*s.userData.speed+s.userData.phase)*0.8; });
+            camera.position.x+=(mouse.x*0.6-camera.position.x)*1.5*dt; camera.position.y+=(1.5+mouse.y*0.4-camera.position.y)*1.5*dt; camera.lookAt(0,0.3,0);
+            renderer.render(scene,camera);
+        }
+        window.addEventListener('resize',()=>{ camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
+        setTimeout(()=>{ loadingScreen.classList.add('hidden'); setTimeout(()=>{ if(loadingScreen.parentNode) loadingScreen.style.display='none'; },700); },1800);
+        requestAnimationFrame(animate);
+
+        // ---- SKILLS ICONS & RENDERING ----
+        const skillIcons = {
+            Java: `<svg viewBox="0 0 24 24" fill="none"><path d="M6 4h2l1 5-1 1h6l-1-1 1-5h2l1 7H6L5 4z" fill="#f89820"/><circle cx="7" cy="16" r="1.5" fill="#f89820"/><circle cx="13" cy="16" r="1.5" fill="#f89820"/><path d="M9 20h4v1H9z" fill="#f89820"/></svg>`,
+            Python: `<svg viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 4.24 4 7s3.58 5 8 5 8-2.24 8-5-3.58-5-8-5zm0 8c-1.66 0-3-1.12-3-2.5S10.34 5 12 5s3 1.12 3 2.5S13.66 10 12 10zm-7.5 2C2.58 12 0 13.57 0 15.5S2.58 19 4.5 19c1.38 0 2.61-.62 3.38-1.62l-1.26-.9C5.9 17.24 5.24 17.5 4.5 17.5c-1.1 0-2-.67-2-1.5s.9-1.5 2-1.5c.74 0 1.4.26 1.88.68l1.25-1.1C7.11 12.62 5.88 12 4.5 12zm15 0c-1.38 0-2.61.62-3.38 1.62l1.26.9c.72-.76 1.38-1.02 2.12-1.02 1.1 0 2 .67 2 1.5s-.9 1.5-2 1.5c-.74 0-1.4-.26-1.88-.68l-1.25 1.1c.82.88 2.05 1.5 3.13 1.5 1.92 0 4-1.57 4-3.5s-2.08-3.5-4-3.5z" fill="#3776AB"/></svg>`,
+            SQL: `<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" fill="#E38D13"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" fill="none" stroke="#E38D13" stroke-width="2"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" fill="none" stroke="#E38D13" stroke-width="2" stroke-dasharray="2,2"/></svg>`,
+            C: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#A8B9CC" stroke-width="2" fill="none"/><text x="12" y="16" text-anchor="middle" font-size="14" font-weight="bold" fill="#A8B9CC">C</text></svg>`,
+            HTML: `<svg viewBox="0 0 24 24"><path d="M4 2l1.5 16L12 22l6.5-4L20 2H4zm3.5 4h9l-.5 5H8.5l.3 3h6.2l-.5 4.5L12 18l-2.5-1-.3-2h1l.1 1 1.7.7 1.7-.7.2-2H8.2L7.5 6z" fill="#E44D26"/></svg>`,
+            CSS: `<svg viewBox="0 0 24 24"><path d="M4 2l1.5 16L12 22l6.5-4L20 2H4zm3.5 4h9l-.4 4H8.5l.3 3h6.2l-.4 3.5L12 18l-2.5-1-.3-2h1l.1 1 1.7.7 1.7-.7.2-2H7.5L7 6z" fill="#1572B6"/></svg>`,
+            JavaScript: `<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="2" fill="#F7DF1E"/><text x="12" y="17" text-anchor="middle" font-size="12" font-weight="bold" fill="#000">JS</text></svg>`,
+            React: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="8" ry="3" stroke="#61DAFB" stroke-width="1.5" fill="none"/><ellipse cx="12" cy="12" rx="8" ry="3" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(60,12,12)"/><ellipse cx="12" cy="12" rx="8" ry="3" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(120,12,12)"/></svg>`,
+            MySQL: `<svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 4 5 6.5S8 11 12 11s7-2.5 7-4.5S16 2 12 2zm-7 6v2c0 2 3 4 7 4s7-2 7-4V8c0 2-3 4-7 4s-7-2-7-4zm0 4v2c0 2 3 4 7 4s7-2 7-4v-2c0 2-3 4-7 4s-7-2-7-4z" fill="#4479A1"/><circle cx="12" cy="6" r="1.2" fill="#F29111"/></svg>`,
+            MongoDB: `<svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-.5 3.5c.2-.1.4 0 .5.2 0 .1 2 4.5 2 6.5 0 1.5-.8 3-2 3.5-1 .4-2 .2-3-.5-.7-.6-1-1.8-1-3 0-2 2-6.4 3.5-6.7z" fill="#47A248"/></svg>`,
+            Git: `<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5" fill="#F05032"/><circle cx="18" cy="18" r="2.5" fill="#F05032"/><circle cx="12" cy="12" r="2.5" fill="#F05032"/><line x1="6" y1="6" x2="12" y2="12" stroke="#F05032" stroke-width="2"/><line x1="12" y1="12" x2="18" y2="18" stroke="#F05032" stroke-width="2"/></svg>`,
+            GitHub: `<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>`,
+            Vite: `<svg viewBox="0 0 24 24"><path d="M21.7 3.3L12 20.8 2.3 3.3h7.7L12 7.5l2-4.2h7.7z" fill="#646CFF"/><path d="M12 20.8L21.7 3.3H14l-2 4.2L10 3.3H2.3L12 20.8z" fill="#fff" opacity="0.3"/></svg>`,
+            Tableau: `<svg viewBox="0 0 24 24"><rect x="3" y="14" width="4" height="7" fill="#E97627"/><rect x="10" y="8" width="4" height="13" fill="#E97627"/><rect x="17" y="4" width="4" height="17" fill="#E97627"/></svg>`,
+            DSA: `<svg viewBox="0 0 24 24"><circle cx="5" cy="19" r="2" fill="#8b5cf6"/><circle cx="12" cy="12" r="2" fill="#8b5cf6"/><circle cx="19" cy="5" r="2" fill="#8b5cf6"/><line x1="5" y1="19" x2="12" y2="12" stroke="#8b5cf6" stroke-width="1.5"/><line x1="12" y1="12" x2="19" y2="5" stroke="#8b5cf6" stroke-width="1.5"/></svg>`,
+            OOP: `<svg viewBox="0 0 24 24"><polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="#a78bfa" stroke-width="2"/><polygon points="12,2 12,22 2,17 2,7" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.5"/></svg>`,
+            DBMS: `<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3" fill="#c084fc"/><path d="M4 5v14c0 1.66 4.48 3 8 3s8-1.34 8-3V5" fill="none" stroke="#c084fc" stroke-width="2"/></svg>`,
+            OS: `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="#8b5cf6" stroke-width="2"/><line x1="8" y1="21" x2="16" y2="21" stroke="#8b5cf6" stroke-width="2"/><line x1="12" y1="17" x2="12" y2="21" stroke="#8b5cf6" stroke-width="2"/></svg>`,
+            CN: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#a78bfa" stroke-width="2"/><line x1="12" y1="3" x2="12" y2="21" stroke="#a78bfa" stroke-width="1.5"/><line x1="3" y1="12" x2="21" y2="12" stroke="#a78bfa" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="#a78bfa" stroke-width="1.5"/></svg>`,
+            Pandas: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#150458"/><circle cx="9" cy="9" r="2.5" fill="#fff"/><circle cx="15" cy="9" r="2.5" fill="#fff"/><circle cx="9" cy="9" r="1" fill="#000"/><circle cx="15" cy="9" r="1" fill="#000"/><ellipse cx="12" cy="14" rx="2" ry="1.5" fill="#fff"/><path d="M9 16c0 1.5 1.5 2.5 3 2.5s3-1 3-2.5" stroke="#fff" stroke-width="0.8" fill="none"/></svg>`,
+            'Scikit-learn': `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#F7931E" stroke-width="1.5" fill="none"/><path d="M8 14l4-4 4 4" stroke="#F7931E" stroke-width="1.5" fill="none"/><circle cx="8" cy="14" r="1" fill="#F7931E"/><circle cx="12" cy="10" r="1" fill="#F7931E"/><circle cx="16" cy="14" r="1" fill="#F7931E"/></svg>`,
+            Flask: `<svg viewBox="0 0 24 24"><path d="M8 2h8v6l4 12H4l4-12V2z" fill="none" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="2" x2="14" y2="2" stroke="#fff" stroke-width="1.5"/></svg>`,
+            SMOTE: `<svg viewBox="0 0 24 24"><line x1="5" y1="17" x2="19" y2="17" stroke="#8b5cf6" stroke-width="2"/><polygon points="12,3 5,17 19,17" fill="none" stroke="#8b5cf6" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#8b5cf6"/></svg>`,
+            NumPy: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="7" height="7" fill="#4DABCF"/><rect x="11" y="2" width="7" height="7" fill="#4DABCF" opacity="0.7"/><rect x="2" y="11" width="7" height="7" fill="#4DABCF" opacity="0.5"/><rect x="11" y="11" width="7" height="7" fill="#4DABCF" opacity="0.3"/></svg>`,
+            Seaborn: `<svg viewBox="0 0 24 24"><polyline points="3,20 8,15 13,17 20,7" fill="none" stroke="#8b5cf6" stroke-width="2"/><circle cx="8" cy="15" r="1.5" fill="#a78bfa"/><circle cx="13" cy="17" r="1.5" fill="#a78bfa"/><circle cx="20" cy="7" r="1.5" fill="#a78bfa"/></svg>`,
+            Plotly: `<svg viewBox="0 0 24 24"><polyline points="2,20 8,12 14,16 22,4" fill="none" stroke="#4472C4" stroke-width="2"/><circle cx="8" cy="12" r="1.5" fill="#4472C4"/><circle cx="14" cy="16" r="1.5" fill="#4472C4"/><circle cx="22" cy="4" r="1.5" fill="#4472C4"/></svg>`,
+        };
+
+        const skillCategories = {
+            "Languages": ["Java", "Python", "SQL", "C"],
+            "Web Technologies": ["HTML", "CSS", "JavaScript", "React"],
+            "Databases": ["MySQL", "MongoDB"],
+            "Tools": ["Git", "GitHub", "Vite", "Tableau"],
+            "Concepts": ["DSA", "OOP", "DBMS", "OS", "CN"],
+            "Libraries": ["Pandas", "Scikit-learn", "Flask", "SMOTE", "NumPy", "Seaborn", "Plotly"]
+        };
+
+        const container = document.getElementById('skills-container');
+        if (container) {
+            for (const [category, skills] of Object.entries(skillCategories)) {
+                const catDiv = document.createElement('div');
+                catDiv.innerHTML = `<h3 class="category-heading">${category}</h3>`;
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3';
+                skills.forEach(skill => {
+                    const card = document.createElement('div');
+                    card.className = 'skill-card';
+                    card.innerHTML = (skillIcons[skill] || '') + `<span>${skill}</span>`;
+                    grid.appendChild(card);
+                });
+                catDiv.appendChild(grid);
+                container.appendChild(catDiv);
+            }
+        }
+
+        // ---- GSAP & NAV ----
+        const navDots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('section[id]');
+        function updateActiveNav() {
+            let current = 'hero';
+            sections.forEach(s => {
+                const rect = s.getBoundingClientRect();
+                if(rect.top <= window.innerHeight*0.4 && rect.bottom >= window.innerHeight*0.3) current = s.id;
+            });
+            navDots.forEach(d => d.classList.toggle('active', d.dataset.section === current));
+        }
+        window.addEventListener('scroll', updateActiveNav, {passive:true});
+        navDots.forEach(d => d.addEventListener('click', e => {
+            e.preventDefault();
+            document.getElementById(d.dataset.section)?.scrollIntoView({behavior:'smooth'});
+        }));
+        updateActiveNav();
+
+        gsap.utils.toArray('.glass-card, .glass-card-sm').forEach((card,i) => {
+            gsap.from(card, { scrollTrigger:{trigger:card, start:'top 85%'}, opacity:0, y:50, duration:0.7, delay:i*0.05, ease:'power2.out' });
+        });
+        gsap.from('#hero h1', {opacity:0,y:60,duration:1,delay:2});
+        gsap.from('#hero p', {opacity:0,y:30,duration:0.8,delay:2.2});
+        gsap.from('#hero .btn-primary, #hero .btn-outline', {opacity:0,y:25,duration:0.7,delay:2.5,stagger:0.15});
+    </script>
+</body>
+</html>
